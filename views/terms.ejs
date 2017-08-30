@@ -1,0 +1,114 @@
+<html>
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav navbar-right">
+            <p class="navbar-text"><%= (typeof name != "undefined" ? name : "") %></p>
+            <li><a href="./logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <form id="termsForm" class="form-horizontal" method="post" action="./terms">
+        <div class = "panel panel-warning">
+            <div class = "panel-heading">
+                <h3 class = "panel-title">
+                    Terms and conditions
+                </h3>
+            </div>
+
+            <div class = "panel-body">
+                <h5>DATA LICENSING:</h5>
+                <p>NVIDIA is making a data set (“Data”) available to participants of the Challenge.  The Data include:
+                </p>
+                <ol>
+                    <li>Silicon Valley Intersection Data –
+                        More than 70 hours of 1080p data at 30 frames per second captured from multiple vantage points
+                    </li>
+                    <li>Virginia Beach Intersection Data – More than 50 hours of 720x480 resolution data at 30 frames per second captured from traffic cameras.
+                        This data is copyright of the Transportation Research Institute at Old Dominion University.
+                    </li>
+                    <li>
+                        Lincoln, Nebraska Data – More than 10 hours of 720x480 resolution data at 30 frames per second captured from handheld cameras.
+                        This data is copyright of Iowa State University
+                    </li>
+                    <li>
+                        Annotations made for key frames of these sets of video data.
+                    </li>
+                </ol>
+                <p>Access to and use of the Data are limited to participants and conditioned upon acceptance of the following terms:</p>
+                <ul>
+                    <li>
+                        During the duration of the Challenge, the Data may be used solely for Challenge-related purposes,
+                        including but not limited to reading and learning from the Data, analyzing the Data,
+                        modifying the Data and generally preparing your Submission and any underlying models.
+                    </li>
+                    <li>
+                        Participants agree to use suitable measures to prevent persons who have not formally agreed to these rules
+                        from gaining access to the Data and agree not to transmit, duplicate, publish, redistribute or
+                        otherwise provide or make available the Data to any party not participating in the Challenge.
+                    </li>
+                    <li>
+                        Participants agree that participation in the Challenge shall not be construed as having or being granted a license (expressly,
+                        by implication, estoppel, or otherwise) under, or any right of ownership in, any of the Data.
+                    </li>
+                    <li>
+                        During the course of the challenge the participants will generate annotations.
+                        Any annotations submitted to the Challenge may be used by NVIDIA for any purpose,
+                        including distribution to other participants in the Challenge as part of the Data,
+                        or for any other commercial or non-commercial purpose.
+                    </li>
+                </ul>
+                <p>
+                    Upon the conclusion of the Challenge, participants may use the Data,
+                    including models trained on the Data, for non-commercial, academic purposes only.
+                    Participants may not distribute the Data, in whole or in part; a minimal portion of the Data
+                    may be reproduced as part of research papers, as appropriate, provided that any such use of the
+                    Data is accompanied by the appropriate acknowledgement(s).  Phrasing for acknowledgements will be
+                    provided at the conclusion of the Challenge.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-4 control-label">Name</label>
+            <div class="col-xs-5">
+                <input type="text" class="form-control" name="name" placeholder="Full name" id="name" required="true"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-4 control-label">Email</label>
+            <div class="col-xs-5">
+                <input type="email" class="form-control" name="email" placeholder="Email" id="email" required="true"/>
+            </div>
+        </div>
+        <%if (typeof result != "undefined" && result == 'error') {%>
+            <div class="form-group">
+                <div class="col-md-4 col-md-offset-4">
+                    <ul class="text-danger">
+                        <%errors.forEach(function(error){%>
+                            <li><%= error.msg%></li>
+                        <% });%>
+                    </ul>
+                </div>
+            </div>
+        <%}%>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary center-block">
+            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> I accept on behalf of my institution
+            </button>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>

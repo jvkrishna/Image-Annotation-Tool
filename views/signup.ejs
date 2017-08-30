@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    body {
+        background:#333;
+    }
+    .align-center {
+        text-align:center;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>Signup</title>
+</head>
+<body>
+<div class="container" style="width: 15%">
+    <div class="row">
+        <div class="form_bg">
+            <form action="./signup" method="post">
+                <h2 class="text-center">Signup Page</h2>
+                <br/>
+                <% if (message.length > 0) { %>
+                <div class="alert alert-danger"><%= message %></div>
+                <% } %>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label>Team Name</label>
+                    <input type="text" class="form-control" id="teamName" name="teamName" placeholder="Team Name">
+                </div>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label>Roles</label>
+                    <input type="text" class="form-control" id="roles" name="roles" placeholder="Roles">
+                </div>
+                <br/>
+                <div class="align-center">
+                    <button type="submit" class="btn btn-default" id="singup" style="width: 100%;">Signup</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

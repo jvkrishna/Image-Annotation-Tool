@@ -1,0 +1,119 @@
+<html>
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.8.1/bootstrap-table.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.8.1/bootstrap-table.js"></script>
+    <script src="./public/javascripts/blockui.js" type="text/javascript"></script>
+</head>
+<body>
+<script>
+    $(function() {
+
+        //fix blockUI spinning wheel problem
+        $.blockUI.defaults.overlayCSS.cursor = 'default';
+        function blockUI(){
+            $.blockUI({ css: {
+                border: 'none',
+                padding: '15px',
+                backgroundColor: '#000',
+                '-webkit-border-radius': '10px',
+                '-moz-border-radius': '10px',
+                opacity: .5,
+                color: '#fff'
+            } });
+        }
+        //Get all teams aggregate results.
+        function updateLeaderboard() {
+            blockUI();
+            $.ajax({
+               url:'./getstats',
+                dataType:'json',
+                success: function(results) {
+		  $('#leaderboard').bootstrapTable('destroy');
+                   var rank = 0;
+                   var labelsAnnotated = 0;
+                   var imagesAnnotated = 0;
+                   results.forEach(function(result) {
+                       result['rank'] = ++rank;
+                       labelsAnnotated += result.labels;
+                       imagesAnnotated += result['imagesAnnotated'];
+                   });
+                   $('#leaderboard').bootstrapTable({
+                        data:results,
+                       detailView:true,
+                       onExpandRow: function(idx,row, $detail) {
+                           $detail.html('<table></table>').find('table').bootstrapTable({
+                               columns:[
+                                   {
+                                       field: 'username',
+                                       title:'User ID'
+                                   },
+                                   {
+                                       field:'imagesAnnotated',
+                                       title: 'Images Annotated'
+                                   },
+                                   {
+                                       field: 'labels',
+                                       title:'Labels Annotated'
+                                   }
+                               ],
+                               data: row['userProgress']
+                           });
+
+                       }
+                   });
+
+                    console.log("Total Labels Annotated:", labelsAnnotated);
+                    console.log("Total Images Annotated:", imagesAnnotated);
+                },
+                error: function(err) {
+                   alert("Failed to show leader board. Please try again later.")
+                },
+                complete: function() {
+                   $.unblockUI();
+                }
+            });
+        }
+
+        //Populate table.
+        updateLeaderboard();
+
+        //refresh table.
+        $("#updateStats").click(function(e){
+            updateLeaderboard();
+        });
+    });
+</script>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav navbar-center">
+            <p class="navbar-text">NVIDIA AI City Challenge</p>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <h1>Leaderboard</h1>
+    <button type="button" class="btn btn-warning pull-right" id="updateStats">Refresh</button>
+    <table class="display table table-bordered table-condensed" id="leaderboard">
+        <thead>
+        <tr class="success">
+            <th data-field="rank">Rank</th>
+            <th data-field="teamname">Team ID</th>
+            <th data-field="imagesAnnotated">Images Annotated</th>
+            <th data-field="labels">Labels Annotated</th>
+        </tr>
+        </thead>
+    </table>
+    <br />
+    <table ></table>
+</div>
+</body>
+</html>
