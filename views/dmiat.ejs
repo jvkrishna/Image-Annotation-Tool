@@ -779,7 +779,7 @@ function get_random_int(min, max) {
 function _via_load_submodules() {
 
     //Get all images and then call the function to start loading all the images;
-    blockUI();
+    //blockUI();
     $.ajax({
         url:"./dmiat/getimages",
         type:'GET',
@@ -788,7 +788,9 @@ function _via_load_submodules() {
         },
         success: function (res) {
             img_url_list = res;
-            init_payload();
+            if(img_url_list.length > 0) {
+                init_payload();
+            }
         }
     });
 }

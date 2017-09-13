@@ -8,10 +8,10 @@ var session = require('express-session');
 var passport = require('passport');
 var mongoose = require('mongoose');
 var flash    = require('connect-flash');
+var util = require('./routes/utils');
 require('./config/passport')(passport);
 
 var index = require('./routes/index');
-var users = require('./routes/users');
 var login = require('./routes/login');
 var dmiat = require('./routes/dmiat');
 var signup = require('./routes/signup');
@@ -59,8 +59,14 @@ app.use('/', index);
 app.use('/login',login);
 app.use('/signup',signup);
 app.use('/dmiat',dmiat);
-app.use('/users', users);
 app.use('/api',api);
+
+/** Create a default admin on server startup */
+util.createDefaultAdmin(function(err) {
+    if(err) {
+        console.log("Failed to create a default admin user.")
+    }
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

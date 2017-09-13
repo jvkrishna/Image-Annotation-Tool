@@ -170,3 +170,23 @@ function validateRegions(selector, callback) {
         })
     })
 }
+module.exports.createDefaultAdmin = function(cb) {
+    User.findOne({'username':'admin'},function(err,user){
+        if(err){
+            cb(err);
+        }
+        if(!user) {
+            //First time setup. Create a new admin user.
+            var newUser = new User({
+                name:'Admin',
+                teamName:'admin',
+                username:'admin',
+                password:new User().generateHash('admin'),
+                roles:['admin']
+            });
+            newUser.save(function (err) {
+                cb(err);
+            })
+        }
+    })
+};

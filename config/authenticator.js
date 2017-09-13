@@ -22,18 +22,16 @@ function checkAuthentication(req,res,next) {
 function checkACL(role) {
    return function(req,res,next) {
         if(!req.user)
-           res.redirect('./login');
+           return res.redirect('./login');
         var user = req.user;
         User.findById(user._id,function(err,user){
             if(err) {
                 res.status(401).json({error: 'No user found.'});
-                return next(err);
             }
             if(user.roles.indexOf(role) > -1) {
                 return next();
             } else {
                 res.status(401).json({error: 'You are not authorized to view this content'});
-                return next('Unauthorized');
             }
         })
    };
@@ -44,9 +42,10 @@ function termsAgreed(req,res,next) {
     if(!user) {
         return res.redirect('./login');
     }
-    if(!user.terms || !user.terms.agreed) {
-       return res.redirect('./terms');
-    }
+    //Disabled the terms page
+    // if(!user.terms || !user.terms.agreed) {
+    //    return res.redirect('./terms');
+    // }
     next();
 }
 

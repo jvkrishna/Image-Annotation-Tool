@@ -5,6 +5,8 @@ var express = require('express');
 var router = express.Router();
 var authenticator = require('../config/authenticator');
 var utils = require('./utils');
+var User = require('../models/user');
+var Annotation = require('../models/annotation');
 
 var createUser = function(req) {
     var newUser = new User();
