@@ -1,5 +1,7 @@
 # Image-Annotation-Tool
 
+Image annotation tool is developed for Nvidia AI City Challenge. The tool is designed to provide a platform for the participating teams to annotate their assigned images collaboratively.
+
 ## Setup
 1. Download and install [MongoDB](https://docs.mongodb.com/manual/installation/)
 2. Download and install latest [NodeJS](https://nodejs.org/en/download/current/)
